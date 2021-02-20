@@ -1,4 +1,4 @@
-import java.util.*
+import java.util.ArrayDeque
 
 fun main() {
     val myQueue = ArrayDeque<String>()
