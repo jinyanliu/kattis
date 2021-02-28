@@ -1,25 +1,28 @@
 fun freqQuery(queries: Array<Array<Int>>): Array<Int> {
-    val currentList = arrayListOf<Int>()
+    val elementToFrequency = mutableMapOf<Int, Int>()
     val resultList = arrayListOf<Int>()
 
     queries.map { it[0] to it[1] }.forEach {
         when (it.first) {
-            1 -> currentList.add(it.second)
-            2 -> currentList.remove(it.second)
-            3 -> resultList.add(getOutput(currentList, it.second))
+            1 -> {
+                val currentFrequency = elementToFrequency[it.second] ?: 0
+                elementToFrequency[it.second] = currentFrequency + 1
+            }
+            2 -> {
+                val currentFrequency = elementToFrequency[it.second]
+                if (currentFrequency != null && currentFrequency > 0) {
+                    elementToFrequency[it.second] = currentFrequency - 1
+                }
+            }
+            3 -> resultList.add(getOutput(elementToFrequency, it.second))
             else -> error("")
         }
     }
     return resultList.toTypedArray()
 }
 
-fun getOutput(list: ArrayList<Int>, frequency: Int): Int {
-    list.forEach { number ->
-        if (list.count { it == number } == frequency) {
-            return 1
-        }
-    }
-    return 0
+fun getOutput(map: Map<Int, Int>, frequency: Int): Int {
+    return if (map.containsValue(frequency)) 1 else 0
 }
 
 fun main(args: Array<String>) {
