@@ -33,3 +33,11 @@ fun processOneSection(sectionElements: List<String>): Int {
         .map { it.value.first to (if (it.index == 0) it.value.second else (it.value.second - logs[it.index - 1].second)) }
     return normalizedLogs.sumBy { it.first * it.second }
 }
+
+sealed class SpeedLimit
+class High(val message:String, val speed:Int):SpeedLimit()
+class Low(val message:String):SpeedLimit()
+
+enum class Speed(val message: String){
+    HIGH(""), LOW("")
+}

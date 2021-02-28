@@ -28,44 +28,44 @@ class Id(private val size: Int) {
             }
         }*/
         if (currentAvailableIds.isEmpty()) {
-            return Result.ERROR("All ids are gone.")
+            return Error("All ids are gone.")
         }
 
         val returnId = currentAvailableIds.removeFirst()
         booleanArray[returnId] = false
-        return Result.SUCCESS(returnId)
+        return Success(returnId)
     }
 
     internal fun getSpecificId(id: Int): Result {
         if (id < 0 || id >= size) {
-            return Result.ERROR("Id $id is not in 0..${size - 1}.")
+            return Error("Id $id is not in 0..${size - 1}.")
         }
         return when (booleanArray[id]) {
             true -> {
                 currentAvailableIds.remove(id)
                 booleanArray[id] = false
-                Result.SUCCESS(id)
+                Success(id)
             }
-            false -> Result.ERROR("Id $id is gone.")
+            false -> Error("Id $id is gone.")
         }
     }
 
     fun returnId(id: Int): Result {
         if (id < 0 || id >= size) {
-            return Result.ERROR("Id $id is not in 0..${size - 1}.")
+            return Error("Id $id is not in 0..${size - 1}.")
         }
         return when (booleanArray[id]) {
             false -> {
                 currentAvailableIds.add(id)
                 booleanArray[id] = true
-                Result.SUCCESS(id)
+                Success(id)
             }
-            true -> Result.ERROR("Id $id already exists.")
+            true -> Error("Id $id already exists.")
         }
     }
 }
 
-sealed class Result {
-    class ERROR(val errorMessage: String) : Result()
-    class SUCCESS(val id: Int) : Result()
-}
+sealed class Result 
+class Error(val errorMessage: String) : Result()
+class Success(val id: Int) : Result()
+
