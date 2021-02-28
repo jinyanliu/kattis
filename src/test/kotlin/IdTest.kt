@@ -6,7 +6,7 @@ internal class IdTest {
 
     @org.junit.jupiter.api.Test
     fun getId() {
-        val idLib = Id()
+        val idLib = Id(101)
         (0..100).forEach {
             idLib.getSpecificId(it)
         }
@@ -16,7 +16,7 @@ internal class IdTest {
         assertEquals("All ids are gone.", (result as Result.ERROR).errorMessage)
 
 
-        val idLib2 = Id()
+        val idLib2 = Id(101)
         (0..99).forEach {
             idLib2.getSpecificId(it)
         }
@@ -32,7 +32,7 @@ internal class IdTest {
 
     @org.junit.jupiter.api.Test
     fun getSpecificId() {
-        val idLib = Id()
+        val idLib = Id(101)
 
         val result = idLib.getSpecificId(33)
         assertTrue(result is Result.SUCCESS)
@@ -49,7 +49,7 @@ internal class IdTest {
 
     @org.junit.jupiter.api.Test
     fun returnId() {
-        val idLib = Id()
+        val idLib = Id(101)
         idLib.getSpecificId(55)
 
         val result = idLib.returnId(55)
